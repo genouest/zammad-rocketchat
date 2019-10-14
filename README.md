@@ -8,7 +8,7 @@ AGPL-3.0
 
 ## Generating zammad package
 
-python3 create-zammad-extension.py > zammad-rocketchat.szpm
+    python3 create-zammad-extension.py
 
 ## Installing extension
 

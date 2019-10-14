@@ -1,21 +1,22 @@
 import os
 import base64
+import json
+
+version = '1.0.0'
+
+if 'GITHUB_REF' in os.environ:
+  version = os.environ['GITHUB_REF']
+  print('using GITHUB_REF: %s' % (os.environ['GITHUB_REF']))
 
 template = '''{
   "name": "RocketChat for Zammad",
-  "version": "1.0.0",
+  "version": "%s",
   "vendor": "GenOuest",
   "license": "MIT",
   "url": "https://www.genouest.org",
-  "buildhost": "",
+  "buildhost": "github-ci",
   "builddate": "2019-10-11 14:59:00 UTC",
-  "change_log": [
-    {
-      "version": "1.0.0",
-      "date": "2019-10-11 14:59:00 UTC",
-      "log": "Initial version."
-    }
-  ],
+  "change_log": %s,
   "description": [
     {
       "language": "en",
@@ -71,4 +72,10 @@ for f in files:
         content = t.read()
         b64 = base64.b64encode(str.encode(content))
         tplfiles.append(tplfile % (f, b64.decode()))
-print(template % (','.join(tplfiles)))
+
+changelog = []
+with open('CHANGELOG') as ch:
+  changelog = json.load(ch)
+
+with open('zammad-rocketchat.szpm', 'w') as f:
+  f.write(template % (version, json.dumps(changelog), ','.join(tplfiles)))
