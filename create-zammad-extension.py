@@ -54,7 +54,6 @@ files = [
     'app/views/rocketchat/ticket_update/zh-tw.md.erb',
     'lib/notification_factory/rocketchat.rb',
     'spec/lib/notification_factory/rocketchat_spec.rb',
-    'test/browser/integration_test.rb',
     'db/seeds/rocket.rb'
     ]
 
