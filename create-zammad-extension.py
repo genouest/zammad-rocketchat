@@ -7,6 +7,8 @@ version = '1.0.0'
 if 'GITHUB_REF' in os.environ:
   version = os.environ['GITHUB_REF']
   print('using GITHUB_REF: %s' % (os.environ['GITHUB_REF']))
+  # refs/tags/
+  version = version.replace('refs/tags', '')
 
 template = '''{
   "name": "RocketChat for Zammad",
