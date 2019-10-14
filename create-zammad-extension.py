@@ -1,8 +1,10 @@
 import os
 import base64
 import json
+import datetime
 
 version = '1.0.0'
+buildtime = datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S UTC")
 
 if 'GITHUB_REF' in os.environ:
   version = os.environ['GITHUB_REF']
@@ -17,7 +19,7 @@ template = '''{
   "license": "MIT",
   "url": "https://www.genouest.org",
   "buildhost": "github-ci",
-  "builddate": "2019-10-11 14:59:00 UTC",
+  "builddate": "%s",
   "change_log": %s,
   "description": [
     {
@@ -80,4 +82,4 @@ with open('CHANGELOG') as ch:
   changelog = json.load(ch)
 
 with open('zammad-rocketchat.szpm', 'w') as f:
-  f.write(template % (version, json.dumps(changelog), ','.join(tplfiles)))
+  f.write(template % (version, buildtime, json.dumps(changelog), ','.join(tplfiles)))
